@@ -12,6 +12,12 @@ function onNumberSelect(number) {
   changeDisplayValue(number);
 }
 
+function onOperatorSelect(operator) {}
+
+function onClear() {}
+
+function undo() {}
+
 function handleEventListeners() {
   let numberButtons = document.querySelectorAll('.number');
   numberButtons.forEach(element => {
