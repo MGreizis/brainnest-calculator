@@ -1,7 +1,10 @@
 // import * as operations from "./operations";
 // This import here won't work if running the site by opening the file directly, it needs a live server
 
-let displayValue = 0;
+let currentOperand = 0;
+let previousOperand = 0;
+let currentOperator = ""
+let displayValue = ''
 
 function changeDisplayValue(newValue) {
   displayValue = newValue;
@@ -13,11 +16,13 @@ function onNumberSelect(number) {
   changeDisplayValue(number);
 }
 
-function onOperatorSelect(operator) {}
+function onOperatorSelect(operator) {
+  currentOperator = operator
+}
 
 function onClear() {}
 
-function undo() {}
+function onDelete() {}
 
 function onEqual() {
   // operate function imported from operations
@@ -49,7 +54,7 @@ function handleEventListeners() {
   });
   const undoButton = document.querySelector('.undo')
   undoButton?.addEventListener("click", () => {
-    undo();
+    onDelete();
   })
 }
 
