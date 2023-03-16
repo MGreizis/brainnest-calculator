@@ -38,7 +38,7 @@ function handleEventListeners() {
   numberButtons.forEach(element => {
     element.addEventListener("click", () => {
       // The text written on the button, which will be the number itself
-      onNumberSelect(element.childNodes[0].nodeValue);
+      onNumberSelect(element.textContent);
     });
   });
   const operatorButtons = document.querySelectorAll('.operator');
@@ -46,7 +46,7 @@ function handleEventListeners() {
     element.addEventListener("click", () => {
       // The text written on the button, which will be the operator itself
       // A string contained +, -, * or /
-      onOperatorSelect(element.childNodes[0].nodeValue);
+      onOperatorSelect(element.textContent);
     });
   });
   const equalButton = document.querySelector('.equal');
