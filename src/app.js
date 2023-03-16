@@ -1,15 +1,20 @@
 // import * as operations from "./operations";
 // This import here won't work if running the site by opening the file directly, it needs a live server
 
-let currentOperand = 0;
-let previousOperand = 0;
+let currentOperand = "0";
+let previousOperand = "0";
 let currentOperator = ""
 let displayValue = ''
 
-function changeDisplayValue(newValue) {
-  displayValue = newValue;
-  console.log(displayValue)
-  // code for updating the screen with new value
+function changeDisplayValue(newValue, replace = false) {
+  // if (replace) {
+  //   displayValue = newValue;
+  // } else {
+  //   displayValue += newValue;
+  // }
+  replace ? displayValue = newValue : displayValue += newValue;
+  let displayNode = document.querySelector(".screen")
+  displayNode.textContent = displayValue;
 }
 
 function onNumberSelect(number) {
