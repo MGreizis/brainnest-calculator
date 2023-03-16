@@ -29,10 +29,21 @@ function onClear() {
   currentOperand = "";
   previousOperand = "";
   currentOperator = "";
+  // replace display value with empty string
   changeDisplayValue("", true);
 }
 
-function onDelete() {}
+function onDelete() {
+  if (displayValue.length > 0) {
+    // turn string into array
+    const arrayDisplayValue = displayValue.split("")
+    // remove the last element and turn it into a string again
+    displayValue = arrayDisplayValue.slice(0, arrayDisplayValue.length - 1).join("");
+    // force displayValue on screen to be replaced
+    changeDisplayValue(displayValue, true);
+  }
+  
+}
 
 function onEqual() {
   // operate function imported from operations
@@ -62,8 +73,8 @@ function handleEventListeners() {
   clearButton.addEventListener("click", () => {
     onClear();
   });
-  const undoButton = document.querySelector('.undo')
-  undoButton?.addEventListener("click", () => {
+  const deleteButton = document.querySelector('#delete')
+  deleteButton?.addEventListener("click", () => {
     onDelete();
   })
 }
