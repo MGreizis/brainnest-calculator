@@ -45,9 +45,23 @@ function onDelete() {
   
 }
 
+/* does something like this work??
 function onEqual() {
   // operate function imported from operations
+  const { firstOperand, displayValue, operator } = 'calculator'
+  const inputValue = parseFloat(displayValue);
+
+  if (firstOperand == null && !isNaN(inputValue)) {
+    calculator.firstOperand = inputValue;
+  } else if (operator) {
+    const result = calculate(firstOperand, inputValue, operator);
+
+    calculator.displayValue = String(result);
+    calculator.firstOperand = result;
+  }
 }
+*/
+
 
 function handleEventListeners() {
   const numberButtons = document.querySelectorAll('.number');
