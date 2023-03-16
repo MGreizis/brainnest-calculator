@@ -1,8 +1,8 @@
 // import * as operations from "./operations";
 // This import here won't work if running the site by opening the file directly, it needs a live server
 
-let currentOperand = "0";
-let previousOperand = "0";
+let currentOperand = "";
+let previousOperand = "";
 let currentOperator = ""
 let displayValue = ''
 
@@ -13,7 +13,7 @@ function changeDisplayValue(newValue, replace = false) {
   //   displayValue += newValue;
   // }
   replace ? displayValue = newValue : displayValue += newValue;
-  let displayNode = document.querySelector(".screen")
+  let displayNode = document.querySelector(".screen");
   displayNode.textContent = displayValue;
 }
 
@@ -25,7 +25,12 @@ function onOperatorSelect(operator) {
   currentOperator = operator
 }
 
-function onClear() {}
+function onClear() {
+  currentOperand = "";
+  previousOperand = "";
+  currentOperator = "";
+  changeDisplayValue("", true);
+}
 
 function onDelete() {}
 
