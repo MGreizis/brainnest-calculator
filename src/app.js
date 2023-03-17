@@ -2,6 +2,7 @@ let firstOperand = "";
 let secondOperand = "";
 let operator = "";
 let displayValue = "";
+let currentResult = "";
 
 function add(num1, num2) {
   return num1 + num2;
@@ -44,9 +45,16 @@ function onNumberSelect(number) {
     secondOperand += number;
     changeDisplayValue(number);
   } else {
-    // modify the first operand
-    firstOperand += number;
-    changeDisplayValue(number);
+    // no operator and previous result
+    if (currentResult) {
+      firstOperand = number;
+      changeDisplayValue(firstOperand, true);
+    } else {
+      // no operator and no previous result
+      // modify the first operand
+      firstOperand += number;
+      changeDisplayValue(number);
+    }
   }
 }
 
@@ -80,65 +88,21 @@ function onClear() {
   changeDisplayValue("", true);
 }
 
-function getLastResult(displayValue) {
-  const parts = displayValue.split(" ");
-  if (parts.length === 3) {
-    // Extract the first number, operator, and second number
-    const firstNum = parseFloat(parts[0]);
-    const operator = parts[1];
-    const secondNum = parseFloat(parts[2]);
-    // If all parts are valid and the operator is one of the four basic arithmetic operators
-    if (
-      !isNaN(firstNum) &&
-      !isNaN(secondNum) &&
-      ["+", "-", "*", "/"].includes(operator)
-    ) {
-      // Calculate the result and return it with the expression used to calculate it
-      return {
-        result: operate(firstNum, secondNum, operator),
-        expression: `${firstNum} ${operator} ${secondNum}`,
-      };
-    }
-  }
-  return null;
-}
-
 function onDelete() {
   if (displayValue.length > 0) {
-    // Get the last result from the display value
-    const lastResult = getLastResult(displayValue);
-    if (lastResult) {
-      // Remove the expression used to calculate the last result from the display value
-      displayValue = displayValue.slice(0, -lastResult.expression.length);
-      // Set the first operand to the last result and clear the second operand and operator
-      firstOperand = lastResult.result;
-      secondOperand = "";
+    if (secondOperand) {
+      secondOperand = secondOperand.slice(0 , secondOperand.length - 1);
+      changeDisplayValue(`${firstOperand}${operator}${secondOperand}`, true);
+    } else if (operator) {
       operator = "";
-      changeDisplayValue(displayValue, true);
+      changeDisplayValue(firstOperand, true);
     } else {
-      // If no result was found, remove the last character from the display value
-      displayValue = displayValue.slice(0, -1);
-      changeDisplayValue(displayValue, true);
+      firstOperand = firstOperand.slice(0 , firstOperand.length - 1);
+      changeDisplayValue(`${firstOperand}`, true);
     }
   }
 }
 
-/* does something like this work??
-function onEqual() {
-  // operate function imported from operations
-  const { firstOperand, displayValue, operator } = 'calculator'
-  const inputValue = parseFloat(displayValue);
-
-  if (firstOperand == null && !isNaN(inputValue)) {
-    calculator.firstOperand = inputValue;
-  } else if (operator) {
-    const result = calculate(firstOperand, inputValue, operator);
-
-    calculator.displayValue = String(result);
-    calculator.firstOperand = result;
-  }
-}
-*/
 
 function onEqual() {
   if (firstOperand && secondOperand && operator) {
@@ -149,6 +113,7 @@ function onEqual() {
     );
     // reset operands and operator
     firstOperand = result.toString();
+    currentResult = result.toString();
     secondOperand = "";
     operator = "";
     // update display with result
