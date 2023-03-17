@@ -75,7 +75,13 @@ function onOperatorSelect(newOperator) {
     } else {
       // if no operator yet
       operator = newOperator;
-      changeDisplayValue(operator);
+      if (firstOperand.charAt(firstOperand.length-1) === '.') {
+        firstOperand = firstOperand.slice(0, firstOperand.length - 1);
+        changeDisplayValue(`${firstOperand}${operator}`, true)
+      } else {
+        changeDisplayValue(operator);
+      }
+      
     }
   }
 }
@@ -141,6 +147,27 @@ function onMinus() {
   }
 }
 
+function onPercentage() {
+  if (firstOperand && !operator) {
+    firstOperand /= 100;
+    console.log(firstOperand);
+    changeDisplayValue(firstOperand, true);
+  } else if (operator && secondOperand) {
+    secondOperand /= 100;
+    changeDisplayValue(`${firstOperand}${operator}${secondOperand}`, true);
+  }
+}
+
+function onDecimal() {
+  if (firstOperand && !operator && !firstOperand.includes('.')) {
+    firstOperand += '.';
+    changeDisplayValue('.');
+  } else if (operator && secondOperand && !secondOperand.includes('.')) {
+    secondOperand += '.';
+    changeDisplayValue('.');
+  }
+}
+
 function handleEventListeners() {
   const numberButtons = document.querySelectorAll(".number");
   numberButtons.forEach((element) => {
@@ -170,7 +197,11 @@ function handleEventListeners() {
     onDelete();
   });
   const negativeButton = document.querySelector(".negativeToggle");
-  negativeButton.addEventListener("click", onMinus)
+  negativeButton.addEventListener("click", onMinus);
+  const percentageButton = document.querySelector(".percentage");
+  percentageButton.addEventListener("click", onPercentage);
+  const decimalButton = document.querySelector(".decimal");
+  decimalButton.addEventListener("click", onDecimal);
 }
 
 handleEventListeners();

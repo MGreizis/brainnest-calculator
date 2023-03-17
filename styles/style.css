@@ -59,6 +59,10 @@ button {
   color: #fff;
   background-color: #f44336;
 }
+.percentage {
+  color: #fff;
+  background-color: #f44336;
+}
 button:hover {
   background-color: #eee;
 }
