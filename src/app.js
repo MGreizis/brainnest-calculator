@@ -80,29 +80,46 @@ function onClear() {
   changeDisplayValue("", true);
 }
 
+function getLastResult(displayValue) {
+  const parts = displayValue.split(" ");
+  if (parts.length === 3) {
+    // Extract the first number, operator, and second number
+    const firstNum = parseFloat(parts[0]);
+    const operator = parts[1];
+    const secondNum = parseFloat(parts[2]);
+    // If all parts are valid and the operator is one of the four basic arithmetic operators
+    if (
+      !isNaN(firstNum) &&
+      !isNaN(secondNum) &&
+      ["+", "-", "*", "/"].includes(operator)
+    ) {
+      // Calculate the result and return it with the expression used to calculate it
+      return {
+        result: operate(firstNum, secondNum, operator),
+        expression: `${firstNum} ${operator} ${secondNum}`,
+      };
+    }
+  }
+  return null;
+}
+
 function onDelete() {
   if (displayValue.length > 0) {
-    // check if displayValue is a result of a previous calculation
-    if (/\d+.?\d*\s*[+-/]\s\d+.?\d*/.test(displayValue)) {
-      let result = displayValue.split(" ")[2];
-      displayValue = displayValue.slice(0, -result.length);
-      firstOperand = result;
+    // Get the last result from the display value
+    const lastResult = getLastResult(displayValue);
+    if (lastResult) {
+      // Remove the expression used to calculate the last result from the display value
+      displayValue = displayValue.slice(0, -lastResult.expression.length);
+      // Set the first operand to the last result and clear the second operand and operator
+      firstOperand = lastResult.result;
       secondOperand = "";
       operator = "";
+      changeDisplayValue(displayValue, true);
     } else {
-      // remove last character from displayValue
+      // If no result was found, remove the last character from the display value
       displayValue = displayValue.slice(0, -1);
-      if (operator) {
-        // if deleting from second operand
-        secondOperand = secondOperand.slice(0, -1);
-      } else {
-        // if deleting from first operand
-        firstOperand = firstOperand.slice(0, -1);
-      }
+      changeDisplayValue(displayValue, true);
     }
-    // update display
-    let displayNode = document.querySelector(".screen");
-    displayNode.textContent = displayValue;
   }
 }
 
