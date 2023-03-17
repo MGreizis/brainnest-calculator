@@ -1,10 +1,31 @@
-// import * as operations from "./operations";
-// This import here won't work if running the site by opening the file directly, it needs a live server
-
-let currentOperand = "";
-let previousOperand = "";
-let currentOperator = ""
+let firstOperand = "";
+let secondOperand = "";
+let operator = ""
 let displayValue = ''
+
+function add(num1, num2) {
+    return num1 + num2;
+}
+function subtract(num1, num2) {
+    return num1 - num2;
+}
+function multiply(num1, num2) {
+    return num1 * num2; 
+}
+function divide(num1, num2) {
+    return num1 / num2;
+}
+function operate(num1, num2, operator) {
+    if (operator === '+') {
+        return num1 + num2;
+    } else if (operator === '-') {
+        return num1 - num2;
+    } else if (operator === '*') {
+        return num1 * num2; 
+    } else if (operator === '/') {
+        return num1 / num2;
+    }
+}
 
 function changeDisplayValue(newValue, replace = false) {
   // if (replace) {
@@ -18,17 +39,27 @@ function changeDisplayValue(newValue, replace = false) {
 }
 
 function onNumberSelect(number) {
-  changeDisplayValue(number);
+  if (operator) {
+    secondOperand += number;
+    changeDisplayValue(` ${secondOperand}`);
+  } else {
+    firstOperand += number;
+    changeDisplayValue(firstOperand);
+  }
 }
 
-function onOperatorSelect(operator) {
-  currentOperator = operator
+function onOperatorSelect(newOperator) {
+  if (firstOperand) {
+    operator = newOperator;
+    changeDisplayValue(`${firstOperand} ${operator}`, true)
+  }
+  
 }
 
 function onClear() {
-  currentOperand = "";
-  previousOperand = "";
-  currentOperator = "";
+  firstOperand = "";
+  secondOperand = "";
+  operator = "";
   // replace display value with empty string
   changeDisplayValue("", true);
 }
@@ -61,6 +92,16 @@ function onEqual() {
   }
 }
 */
+
+function onEqual() {
+  let result
+  if (firstOperand && secondOperand && operator) {
+    result = operate(Number(firstOperand), Number(secondOperand), operator);
+  } else {
+    return;
+  }
+  changeDisplayValue(result, true)
+}
 
 
 function handleEventListeners() {
