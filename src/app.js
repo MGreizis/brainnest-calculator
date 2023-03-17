@@ -4,27 +4,27 @@ let operator = ""
 let displayValue = ''
 
 function add(num1, num2) {
-    return num1 + num2;
+  return num1 + num2;
 }
 function subtract(num1, num2) {
-    return num1 - num2;
+  return num1 - num2;
 }
 function multiply(num1, num2) {
-    return num1 * num2; 
+  return num1 * num2; 
 }
 function divide(num1, num2) {
-    return num1 / num2;
+  return num1 / num2;
 }
 function operate(num1, num2, operator) {
-    if (operator === '+') {
-        return num1 + num2;
-    } else if (operator === '-') {
-        return num1 - num2;
-    } else if (operator === '*') {
-        return num1 * num2; 
-    } else if (operator === '/') {
-        return num1 / num2;
-    }
+  if (operator === '+') {
+    return num1 + num2;
+  } else if (operator === '-') {
+    return num1 - num2;
+  } else if (operator === '*') {
+    return num1 * num2; 
+  } else if (operator === '/') {
+    return num1 / num2;
+  }
 }
 
 function changeDisplayValue(newValue, replace = false) {
@@ -40,9 +40,11 @@ function changeDisplayValue(newValue, replace = false) {
 
 function onNumberSelect(number) {
   if (operator) {
+    // modify the second operand
     secondOperand += number;
     changeDisplayValue(number);
   } else {
+    // modify the first operand
     firstOperand += number;
     changeDisplayValue(number);
   }
@@ -50,14 +52,20 @@ function onNumberSelect(number) {
 
 function onOperatorSelect(newOperator) {
   if (firstOperand) {
+    // operator cannot be selected as the first input
     if (operator && secondOperand) {
+      // if the full operation was already inputted
+      // chain its result with the new operator
       onEqual();
       operator = newOperator;
       changeDisplayValue(operator);
     } else if (operator && !secondOperand) {
+      // if operator was already inputted but no second operand
+      // change the operator
       operator = newOperator;
       changeDisplayValue(`${firstOperand}${operator}`, true);
     } else {
+      // if no operator yet
       operator = newOperator;
       changeDisplayValue(operator);
     }
@@ -106,13 +114,15 @@ function onEqual() {
   let result
   if (firstOperand && secondOperand && operator) {
     result = operate(Number(firstOperand), Number(secondOperand), operator);
+    // take the result as the new first operand for following operations
+    // and clear the second operand
     firstOperand = String(result);
     secondOperand = "";
   } else {
     return;
   }
+  // switch display value to only the result
   changeDisplayValue(result, true)
-
 }
 
 
