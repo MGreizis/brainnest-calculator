@@ -55,7 +55,10 @@ button {
   background-color: #4caf50;
   color: #fff;
 }
-
+.negativeToggle {
+  color: #fff;
+  background-color: #f44336;
+}
 button:hover {
   background-color: #eee;
 }

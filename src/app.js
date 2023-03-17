@@ -121,6 +121,26 @@ function onEqual() {
   }
 }
 
+function onMinus() {
+  if (firstOperand && !operator) {
+    if (parseFloat(firstOperand) < 0) {
+      firstOperand = firstOperand.slice(1);
+    } else {
+      firstOperand = '-' + firstOperand;
+    }
+    changeDisplayValue(firstOperand, true);
+  } else if (operator && secondOperand) {
+    if (parseFloat(secondOperand) < 0) {
+      secondOperand = secondOperand.slice(1);
+      changeDisplayValue(`${firstOperand}${operator}${secondOperand}`, true);
+    } else {
+      secondOperand = '-' + secondOperand;
+      changeDisplayValue(`${firstOperand}${operator}(${secondOperand})`, true);
+    }
+    
+  }
+}
+
 function handleEventListeners() {
   const numberButtons = document.querySelectorAll(".number");
   numberButtons.forEach((element) => {
@@ -149,6 +169,8 @@ function handleEventListeners() {
   deleteButton?.addEventListener("click", () => {
     onDelete();
   });
+  const negativeButton = document.querySelector(".negativeToggle");
+  negativeButton.addEventListener("click", onMinus)
 }
 
 handleEventListeners();
