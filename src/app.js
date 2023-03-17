@@ -41,17 +41,19 @@ function changeDisplayValue(newValue, replace = false) {
 function onNumberSelect(number) {
   if (operator) {
     secondOperand += number;
-    changeDisplayValue(` ${secondOperand}`);
+    changeDisplayValue(number);
+    console.log(secondOperand)
   } else {
     firstOperand += number;
-    changeDisplayValue(firstOperand);
+    changeDisplayValue(number);
+    console.log(firstOperand)
   }
 }
 
 function onOperatorSelect(newOperator) {
   if (firstOperand) {
     operator = newOperator;
-    changeDisplayValue(`${firstOperand} ${operator}`, true)
+    changeDisplayValue(operator)
   }
   
 }
@@ -97,10 +99,13 @@ function onEqual() {
   let result
   if (firstOperand && secondOperand && operator) {
     result = operate(Number(firstOperand), Number(secondOperand), operator);
+    firstOperand = String(result);
+    secondOperand = "";
   } else {
     return;
   }
   changeDisplayValue(result, true)
+
 }
 
 
