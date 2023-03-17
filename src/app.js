@@ -202,6 +202,29 @@ function handleEventListeners() {
   percentageButton.addEventListener("click", onPercentage);
   const decimalButton = document.querySelector(".decimal");
   decimalButton.addEventListener("click", onDecimal);
+
+  window.addEventListener("keydown", (event) => {
+    // check if the key pressed is a number key
+    if (!isNaN(parseInt(event.key))) {
+      onNumberSelect(event.key);
+    } else if (event.key === ".") {
+      onDecimal();
+    } else if (event.key === "Backspace") {
+      onDelete();
+    } else if (event.key === "Escape") {
+      onClear();
+    } else if (event.key === "+") {
+      onOperatorSelect("+");
+    } else if (event.key === "-") {
+      onOperatorSelect("-");
+    } else if (event.key === "*") {
+      onOperatorSelect("*");
+    } else if (event.key === "/") {
+      onOperatorSelect("/");
+    } else if (event.key === "=" || event.key === "Enter") {
+      onEqual();
+    }
+  });
 }
 
 handleEventListeners();
