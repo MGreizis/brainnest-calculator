@@ -42,18 +42,25 @@ function onNumberSelect(number) {
   if (operator) {
     secondOperand += number;
     changeDisplayValue(number);
-    console.log(secondOperand)
   } else {
     firstOperand += number;
     changeDisplayValue(number);
-    console.log(firstOperand)
   }
 }
 
 function onOperatorSelect(newOperator) {
   if (firstOperand) {
-    operator = newOperator;
-    changeDisplayValue(operator)
+    if (operator && secondOperand) {
+      onEqual();
+      operator = newOperator;
+      changeDisplayValue(operator);
+    } else if (operator && !secondOperand) {
+      operator = newOperator;
+      changeDisplayValue(`${firstOperand}${operator}`, true);
+    } else {
+      operator = newOperator;
+      changeDisplayValue(operator);
+    }
   }
   
 }
