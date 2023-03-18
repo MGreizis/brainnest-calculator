@@ -35,23 +35,27 @@ function changeDisplayValue(newValue, replace = false) {
 }
 
 function onNumberSelect(number) {
-  if (operator) {
-    // modify the second operand
-    secondOperand += number;
-    changeDisplayValue(number);
-  } else {
-    // no operator and previous result
-    if (currentResult) {
-      firstOperand = number;
-      currentResult = "";
-      changeDisplayValue(firstOperand, true);
-    } else {
-      // no operator and no previous result
-      // modify the first operand
-      firstOperand += number;
+  // maximum allowed characters on screen
+  if (displayValue.length < 20) {
+    if (operator) {
+      // modify the second operand
+      secondOperand += number;
       changeDisplayValue(number);
+    } else {
+      // no operator and previous result
+      if (currentResult) {
+        firstOperand = number;
+        currentResult = "";
+        changeDisplayValue(firstOperand, true);
+      } else {
+        // no operator and no previous result
+        // modify the first operand
+        firstOperand += number;
+        changeDisplayValue(number);
+      }
     }
   }
+  
 }
 
 function onOperatorSelect(newOperator) {
