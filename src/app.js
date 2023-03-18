@@ -29,11 +29,6 @@ function operate(num1, num2, operator) {
 }
 
 function changeDisplayValue(newValue, replace = false) {
-  // if (replace) {
-  //   displayValue = newValue;
-  // } else {
-  //   displayValue += newValue;
-  // }
   replace ? (displayValue = newValue) : (displayValue += newValue);
   let displayNode = document.querySelector(".screen");
   displayNode.textContent = displayValue;
@@ -48,6 +43,7 @@ function onNumberSelect(number) {
     // no operator and previous result
     if (currentResult) {
       firstOperand = number;
+      currentResult = "";
       changeDisplayValue(firstOperand, true);
     } else {
       // no operator and no previous result
@@ -90,6 +86,7 @@ function onClear() {
   firstOperand = "";
   secondOperand = "";
   operator = "";
+  currentResult = "";
   // replace display value with empty string
   changeDisplayValue("", true);
 }
@@ -103,6 +100,7 @@ function onDelete() {
       operator = "";
       changeDisplayValue(firstOperand, true);
     } else {
+      currentResult = "";
       firstOperand = firstOperand.slice(0 , firstOperand.length - 1);
       changeDisplayValue(`${firstOperand}`, true);
     }
@@ -160,6 +158,7 @@ function onPercentage() {
 
 function onDecimal() {
   if (firstOperand && !operator && !firstOperand.includes('.')) {
+    currentResult = "";
     firstOperand += '.';
     changeDisplayValue('.');
   } else if (operator && secondOperand && !secondOperand.includes('.')) {
