@@ -135,14 +135,14 @@ function onEqual() {
 }
 
 function onMinus() {
-  if (firstOperand && !operator && firstOperand !== '0') {
+  if (firstOperand && !operator && firstOperand !== '0' && firstOperand !== '0.') {
     if (parseFloat(firstOperand) < 0) {
       firstOperand = firstOperand.slice(1);
     } else {
       firstOperand = '-' + firstOperand;
     }
     changeDisplayValue(firstOperand, true);
-  } else if (operator && secondOperand && secondOperand !== '0') {
+  } else if (operator && secondOperand && secondOperand !== '0' && secondOperand !== '0.') {
     if (parseFloat(secondOperand) < 0) {
       secondOperand = secondOperand.slice(1);
       changeDisplayValue(`${firstOperand}${operator}${secondOperand}`, true);
