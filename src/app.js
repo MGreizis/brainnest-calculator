@@ -93,6 +93,8 @@ function onClear() {
 
 function onDelete() {
   if (displayValue.length > 0) {
+    // clear current result from last operation
+    currentResult = "";
     if (secondOperand) {
       secondOperand = secondOperand.slice(0 , secondOperand.length - 1);
       changeDisplayValue(`${firstOperand}${operator}${secondOperand}`, true);
@@ -100,7 +102,6 @@ function onDelete() {
       operator = "";
       changeDisplayValue(firstOperand, true);
     } else {
-      currentResult = "";
       firstOperand = firstOperand.slice(0 , firstOperand.length - 1);
       changeDisplayValue(`${firstOperand}`, true);
     }
